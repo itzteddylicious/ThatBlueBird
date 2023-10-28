@@ -1,0 +1,57 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %}That Blue Bird{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{% static 'network/styles.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div>
+        <ul class="navbar-nav mr-3"> <!-- Left-aligned links -->
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'profile' request.user.username %}"><strong>{{ request.user.username }}</strong></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Feathers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'following' %}">Following</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+      <div class="mx-auto">
+        <a class="navbar-brand mx-auto" style="color: #26a7de; text-shadow: 0 0 #000; font-size: 30px;" href="{% url 'index' %}"><i><strong>That Blue Bird <i class="fa">&#xf099;</i></strong></i></a> <!-- Centered with a right margin -->
+      </div>
+
+      {% if request.user.is_authenticated %}
+      <ul class="navbar-nav ml-5"> <!-- Right-aligned links -->
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+        </li>
+      </ul>
+      {% else %}
+      <ul class="navbar-nav ml-3">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Log In</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'register' %}">Register</a>
+        </li>
+      </ul>
+      {% endif %}
+
+    </nav>
+
+    <div class="container mt-4">
+      {% block body %} {% endblock %}
+    </div>
+  </body>
+  <script src="{% static 'network/script.js' %}"></script>
+  {% block script %} {% endblock %}
+</html>
